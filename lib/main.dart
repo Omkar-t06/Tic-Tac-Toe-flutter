@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tic_tac_toe/constants/colors.dart';
+import 'package:tic_tac_toe/widgets/tictactoe.dart';
 
 void main() {
   runApp(const MyApp());
@@ -53,12 +55,12 @@ class _TicTacToeState extends State<TicTacToe> {
           content: Text(
             "Game is already over! Please start a new game.",
             style: TextStyle(
-              color: Colors.white,
+              color: MyColors.white,
               fontSize: 18,
               fontWeight: FontWeight.w500,
             ),
           ),
-          backgroundColor: Colors.red,
+          backgroundColor: MyColors.warning,
         ),
       );
     } else if (gameState[index] == 'empty') {
@@ -72,12 +74,12 @@ class _TicTacToeState extends State<TicTacToe> {
           content: Text(
             "Cell is already filled!",
             style: TextStyle(
-              color: Colors.white,
+              color: MyColors.white,
               fontSize: 18,
               fontWeight: FontWeight.w500,
             ),
           ),
-          backgroundColor: Colors.red,
+          backgroundColor: MyColors.warning,
           duration: Durations.medium3,
         ),
       );
@@ -129,10 +131,7 @@ class _TicTacToeState extends State<TicTacToe> {
         appBar: AppBar(
           title: const Text(
             "Tic Tac Toe",
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
+            style: TicTacToeStyle.appBarTxt,
           ),
           backgroundColor: Theme.of(context).colorScheme.primary,
         ),
@@ -141,27 +140,24 @@ class _TicTacToeState extends State<TicTacToe> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
               child: Card(
-                  color: gameWinner.isNotEmpty
-                      ? const Color(0XFF38CC77)
-                      : isCross
-                          ? const Color(0XFF38CC77)
-                          : const Color(0xFFF7CD2E),
-                  child: ListTile(
-                    title: Center(
-                      child: Text(
-                        gameWinner.isNotEmpty
-                            ? '${gameWinner[0].toUpperCase()}${gameWinner.substring(1)}'
-                            : isCross
-                                ? 'X\'s Turn'
-                                : 'O\'s Turn',
-                        style: const TextStyle(
-                          color: Color(0xFFFFFFFF),
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
+                color: gameWinner.isNotEmpty
+                    ? MyColors.success
+                    : isCross
+                        ? MyColors.success
+                        : MyColors.orange,
+                child: ListTile(
+                  title: Center(
+                    child: Text(
+                      gameWinner.isNotEmpty
+                          ? '${gameWinner[0].toUpperCase()}${gameWinner.substring(1)}'
+                          : isCross
+                              ? 'X\'s Turn'
+                              : 'O\'s Turn',
+                      style: TicTacToeStyle.playerTxt,
                     ),
-                  )),
+                  ),
+                ),
+              ),
             ),
             Expanded(
               child: Padding(
@@ -183,24 +179,11 @@ class _TicTacToeState extends State<TicTacToe> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: ElevatedButton(
-                style: ButtonStyle(
-                  backgroundColor: const WidgetStatePropertyAll(Colors.blue),
-                  shape: WidgetStatePropertyAll(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  fixedSize: const WidgetStatePropertyAll(
-                    Size(350, 50),
-                  ),
-                ),
+                style: TicTacToeStyle.bntStyle,
                 onPressed: resetState,
                 child: Text(
                   gameWinner == '' ? "Reload Game" : "New Game",
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: TicTacToeStyle.btnText,
                 ),
               ),
             )
@@ -209,42 +192,26 @@ class _TicTacToeState extends State<TicTacToe> {
   }
 }
 
-class TicTacToeCell extends StatelessWidget {
-  const TicTacToeCell({super.key, required this.iconName});
-  final String iconName;
-
-  @override
-  Widget build(BuildContext context) {
-    Icon icon;
-    switch (iconName) {
-      case 'cross':
-        icon = const Icon(
-          Icons.close_rounded,
-          size: 38,
-          color: Color(0xFF38CC77),
-        );
-      case 'circle':
-        icon = const Icon(
-          Icons.circle_outlined,
-          size: 38,
-          color: Color(0xFFF7CD2E),
-        );
-      default:
-        icon = const Icon(
-          Icons.edit,
-          size: 38,
-          color: Color(0xFF333945),
-        );
-    }
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Theme.of(context).colorScheme.primary,
-        ),
-      ),
-      child: Center(
-        child: icon,
-      ),
-    );
-  }
+class TicTacToeStyle {
+  static final bntStyle = ButtonStyle(
+    backgroundColor: const WidgetStatePropertyAll(MyColors.buttonColor),
+    shape: WidgetStatePropertyAll(
+      RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    ),
+    fixedSize: const WidgetStatePropertyAll(Size(350, 50)),
+  );
+  static const btnText = TextStyle(
+    color: MyColors.white,
+    fontSize: 18,
+    fontWeight: FontWeight.w500,
+  );
+  static const playerTxt = TextStyle(
+    color: MyColors.white,
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+  );
+  static const appBarTxt = TextStyle(
+    color: MyColors.white,
+    fontWeight: FontWeight.bold,
+  );
 }
