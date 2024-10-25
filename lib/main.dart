@@ -141,21 +141,27 @@ class _TicTacToeState extends State<TicTacToe> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 12),
               child: Card(
+                  color: gameWinner.isNotEmpty
+                      ? const Color(0XFF38CC77)
+                      : isCross
+                          ? const Color(0XFF38CC77)
+                          : const Color(0xFFF7CD2E),
                   child: ListTile(
-                title: Center(
-                  child: Text(
-                    gameWinner.isNotEmpty
-                        ? '${gameWinner[0].toUpperCase()}${gameWinner.substring(1)}'
-                        : isCross
-                            ? 'X\'s Turn'
-                            : 'O\'s Turn',
-                    style: const TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
+                    title: Center(
+                      child: Text(
+                        gameWinner.isNotEmpty
+                            ? '${gameWinner[0].toUpperCase()}${gameWinner.substring(1)}'
+                            : isCross
+                                ? 'X\'s Turn'
+                                : 'O\'s Turn',
+                        style: const TextStyle(
+                          color: Color(0xFFFFFFFF),
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              )),
+                  )),
             ),
             Expanded(
               child: Padding(
